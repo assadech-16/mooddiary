@@ -8,98 +8,139 @@
   <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
   <style>
-    * {
-      box-sizing: border-box;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
+   * {
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
-    body {
-      background: linear-gradient(135deg, #dfe9f3, #ffffff);
-      display: flex;
-      justify-content: center;
-      padding: 3rem;
-    }
+body {
+  background: linear-gradient(135deg, #dfe9f3, #ffffff);
+  display: flex;
+  justify-content: center;
+  padding: 3rem;
+}
 
-    .container {
-      background-color: white;
-      border-radius: 15px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-      padding: 2rem;
-      max-width: 600px;
-      width: 100%;
-      animation: fadeIn 0.5s ease-in-out;
-    }
+.container {
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  max-width: 600px;
+  width: 100%;
+  animation: fadeIn 0.5s ease-in-out;
+}
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
-    h2, h3 {
-      text-align: center;
-      color: #333;
-    }
+h2, h3 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 1rem;
+}
 
-    .emoji-list {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      margin: 1rem 0;
-    }
+.emoji-list {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin: 1rem 0;
+  transition: all 0.3s ease;
+}
 
-    .emoji-list span {
-      font-size: 2.5rem;
-      cursor: pointer;
-      transition: transform 0.2s;
-    }
+.emoji-list span {
+  font-size: 2.5rem;
+  cursor: pointer;
+  transition: transform 0.2s, filter 0.2s;
+  filter: grayscale(40%);
+}
 
-    .emoji-list span:hover {
-      transform: scale(1.3);
-    }
+.emoji-list span:hover {
+  transform: scale(1.3);
+  filter: grayscale(0%);
+}
 
-    .emoji-list .selected {
-      font-size: 5rem;
-      transform: scale(1.5);
-      transition: all 0.3s ease-in-out;
-    }
+.emoji-list .selected {
+  font-size: 4rem;
+  transform: scale(1.4);
+  filter: grayscale(0%);
+}
 
-    .emoji-list.centered {
-      justify-content: center;
-    }
+.emoji-list.centered {
+  justify-content: center;
+}
 
-    .emoji-list.centered span:not(.selected) {
-      display: none;
-    }
+.emoji-list.centered span:not(.selected) {
+  display: none;
+}
 
-    textarea {
-      width: 100%;
-      font-size: 1rem;
-      padding: 10px;
-      margin-top: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      resize: none;
-    }
+textarea {
+  width: 100%;
+  font-size: 1rem;
+  padding: 12px;
+  margin-top: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  resize: none;
+  min-height: 100px;
+  transition: border-color 0.2s;
+}
 
-    button {
-      padding: 10px 15px;
-      margin-top: 1rem;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
+textarea:focus {
+  border-color: #007bff;
+  outline: none;
+}
 
-    #alert {
-      margin-top: 1rem;
-      text-align: center;
-      font-weight: bold;
-      color: #d9534f;
-    }
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+button {
+  display: block;
+  margin: 1.5rem auto 0 auto; /* 👈 Center horizontally */
+  padding: 12px 30px;
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.4);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background: linear-gradient(135deg, #0056b3, #003d80);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 86, 179, 0.5);
+}
+
+button:active {
+  transform: scale(0.98);
+  box-shadow: 0 2px 8px rgba(0, 86, 179, 0.3);
+}
+
+
+button:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+#alert {
+  margin-top: 1rem;
+  text-align: center;
+  font-weight: bold;
+  color: #d9534f;
+}
+
   </style>
 </head>
 <body>
+
   <div class="container">
     <h2>MOOD DIARY</h2>
     <h3>วันนี้คุณรู้สึกอย่างไร?</h3>
@@ -115,8 +156,8 @@
     <canvas id="moodChart" width="400" height="200"></canvas>
   </div>
 
-  <script>
-      const firebaseConfig = {
+<script>
+  const firebaseConfig = {
     apiKey: "AIzaSyB1GL7yaYo3dPCir54cNoc2K-yldhXY6JE",
     authDomain: "mooddiary-f960e.firebaseapp.com",
     projectId: "mooddiary-f960e",
@@ -126,22 +167,109 @@
     measurementId: "G-SF3S0D55Q4"
   };
 
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
 
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
+  let selectedMood = null;
 
-    let selectedMood = null;
+  // ----------------------
+  // Mood Select Logic
+  // ----------------------
+  document.querySelectorAll(".emoji-list span").forEach((emoji) => {
+    emoji.addEventListener("click", () => {
+      document.querySelectorAll(".emoji-list span").forEach(e => e.classList.remove("selected"));
+      emoji.classList.add("selected");
+      selectedMood = emoji.textContent;
+      document.getElementById("emoji-list").classList.add("centered");
+    });
+  });
 
-    document.querySelectorAll(".emoji-list span").forEach((emoji) => {
-      emoji.addEventListener("click", () => {
-        document.querySelectorAll(".emoji-list span").forEach(e => e.classList.remove("selected"));
-        emoji.classList.add("selected");
-        selectedMood = emoji.textContent;
-        document.getElementById("emoji-list").classList.add("centered");
-      });
+  // ----------------------
+  // Save Mood
+  // ----------------------
+  document.getElementById("saveBtn").addEventListener("click", function () {
+    const comment = document.getElementById("comment").value;
+    const today = new Date().toISOString().split("T")[0];
+
+    if (!selectedMood) {
+      alert("กรุณาเลือกอารมณ์ก่อน");
+      return;
+    }
+
+    db.collection("moods").add({
+      date: today,
+      mood: selectedMood,
+      comment: comment,
+      timestamp: new Date()
+    }).then(() => {
+      alert("บันทึกเรียบร้อยแล้ว!");
+      document.getElementById("comment").value = "";
+      document.querySelectorAll(".emoji-list span").forEach(e => e.classList.remove("selected"));
+      document.getElementById("emoji-list").classList.remove("centered");
+      selectedMood = null;
+    }).catch((error) => {
+      console.error("เกิดข้อผิดพลาด:", error);
+    });
+  });
+
+  // ----------------------
+  // Real-time Mood Chart
+  // ----------------------
+
+  const moodCounts = {
+    "😃": 0,
+    "😐": 0,
+    "😢": 0,
+    "😠": 0,
+  };
+
+  const chartCtx = document.getElementById("moodChart").getContext("2d");
+
+  const moodChart = new Chart(chartCtx, {
+    type: "bar",
+    data: {
+      labels: Object.keys(moodCounts),
+      datasets: [{
+        label: "จำนวนอารมณ์ที่บันทึก",
+        data: Object.values(moodCounts),
+        backgroundColor: ["#4caf50", "#ff9800", "#2196f3", "#f44336"]
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            precision: 0
+          }
+        }
+      }
+    }
+  });
+
+  // Listen for real-time updates
+  db.collection("moods").orderBy("timestamp", "asc").onSnapshot((snapshot) => {
+    // Reset counts
+    for (let mood in moodCounts) {
+      moodCounts[mood] = 0;
+    }
+
+    snapshot.forEach((doc) => {
+      const mood = doc.data().mood;
+      if (moodCounts.hasOwnProperty(mood)) {
+        moodCounts[mood]++;
+      }
     });
 
-    document.getElementById("saveBtn").addEventListener("click", function () {
+    // อัปเดตกราฟ
+    moodChart.data.datasets[0].data = Object.values(moodCounts);
+    moodChart.update();
+  });
+
+</script>
+<script>
+document.getElementById("saveBtn").addEventListener("click", function () {
   const comment = document.getElementById("comment").value;
   const today = new Date().toISOString().split("T")[0];
 
@@ -150,6 +278,8 @@
     return;
   }
 
+  console.log("Saving mood:", selectedMood, comment);
+
   db.collection("moods").add({
     date: today,
     mood: selectedMood,
@@ -157,16 +287,17 @@
     timestamp: new Date()
   }).then(() => {
     alert("บันทึกเรียบร้อยแล้ว!");
-    // ล้างฟอร์ม
     document.getElementById("comment").value = "";
     document.querySelectorAll(".emoji-list span").forEach(e => e.classList.remove("selected"));
     document.getElementById("emoji-list").classList.remove("centered");
     selectedMood = null;
+
+    window.scrollTo({ top: 0, behavior: 'smooth' }); // scroll ขึ้นด้านบนหลังบันทึก
   }).catch((error) => {
     console.error("เกิดข้อผิดพลาด:", error);
+    alert("บันทึกไม่สำเร็จ กรุณาลองใหม่");
   });
 });
-
-  </script>
+</script>
 </body>
 </html>
